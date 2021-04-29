@@ -26,7 +26,8 @@ if [[ "${INPUT_FQDN}" == "https"*  ]]; then
   fi
   mkdir ${GITHUB_WORKSPACE}/truststore
   echo "" | openssl s_client -connect ${INPUT_HOST}:${INPUT_PORT} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
-  keytool -importcert -noprompt -alias server-cert -file certfile.txt -trustcacerts -storetype JKS -storepass changeme
+  keytool -importcert -noprompt -alias server-cert -file certfile.txt -trustcacerts -keystore ${GITHUB_WORKSPACE}/truststore/cacerts -storetype JKS -storepass changeme
+  export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trusStore=${GITHUB_WORKSPACE}/truststore/ -Djavax.net.ssl.trustStorePassword=changeme"
 fi
 
 if [[ ! -f "${GITHUB_WORKSPACE}/sonar-project.properties" ]]; then

@@ -25,8 +25,7 @@ if [[ "${INPUT_FQDN}" == "https"*  ]]; then
    exit 1;
   fi
   echo "" | openssl s_client -connect ${INPUT_HOST}:${INPUT_PORT} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
-  keytool -importcert -noprompt -alias server-cert -file certfile.txt -trustcacerts -keystore ./cacerts -storetype JKS -storepass changeme
-  cat ./cacerts
+  keytool -importcert -noprompt -alias server-cert -file certfile.txt -trustcacerts -keystore ${GITHUB_WORKSPACE}/cacerts -storetype JKS -storepass changeme
 fi
 
 if [[ ! -f "${GITHUB_WORKSPACE}/sonar-project.properties" ]]; then
@@ -43,12 +42,12 @@ if [[ ! -f "${GITHUB_WORKSPACE}/sonar-project.properties" ]]; then
     -Dsonar.password=${SONAR_PASSWORD} \
     -Dsonar.sources=. \
     -Dsonar.sourceEncoding=UTF-8 \
-    -Djavax.net.ssl.trustStore=./cacerts
+    -Djavax.net.ssl.trustStore=${GITHUB_WORKSPACE}/cacerts
 else
   sonar-scanner \
     -Dsonar.host.url=${INPUT_FQDN} \
     -Dsonar.projectBaseDir=${INPUT_PROJECTBASEDIR} \
     -Dsonar.login=${INPUT_LOGIN} \
     -Dsonar.password=${SONAR_PASSWORD} \
-    -Djavax.net.ssl.trustStore=./cacerts
+    -Djavax.net.ssl.trustStore=${GITHUB_WORKSPACE}/cacerts
 fi

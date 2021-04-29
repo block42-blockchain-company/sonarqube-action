@@ -26,6 +26,7 @@ if [[ "${INPUT_HOST}" == "https"*  ]]; then
   fi
   echo "" | openssl s_client -connect ${INPUT_DNS}:${INPUT_PORT} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
   keytool -importcert -alias server-cert -file certfile.txt -trustcacerts -keystore ./cacerts -storetype JKS -storepass changeme
+  cat ./cacerts
 fi
 
 if [[ ! -f "${GITHUB_WORKSPACE}/sonar-project.properties" ]]; then

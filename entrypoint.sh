@@ -17,8 +17,6 @@ REPOSITORY_NAME=$(basename "${GITHUB_REPOSITORY}")
 echo "input host: ${INPUT_HOST}" 
 if [[ "${INPUT_HOST}" == "https"*  ]]; then
   echo "download certificate"
-  apt install openssl
-  apt install keytool
   echo "" | openssl s_client -connect ${INPUT_HOST} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
   keytool -importcert -alias server-cert -file certfile.txt -trustcacerts -keystore ./cacerts -storetype JKS
 fi

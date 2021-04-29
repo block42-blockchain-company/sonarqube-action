@@ -15,17 +15,17 @@ REPOSITORY_NAME=$(basename "${GITHUB_REPOSITORY}")
 [[ ! -z ${INPUT_PASSWORD} ]] && SONAR_PASSWORD="${INPUT_PASSWORD}" || SONAR_PASSWORD=""
 
 echo "input host: ${INPUT_HOST}" 
-if [[ "${INPUT_HOST}" == "https"*  ]]; then
-  if [[ -z ${INPUT_DNS} ]]; then
-   >&2 echo "DNS variable must be given when https protcol is used"
+if [[ "${INPUT_FQDN}" == "https"*  ]]; then
+  if [[ -z ${INPUT_HOST} ]]; then
+   >&2 echo "HOST variable must be given when https protcol is used in fqdn"
    exit 1;
   fi
   if [[ -z ${INPUT_PORT} ]]; then
-   >&2 echo "PORT variable must be given when https protocol is used"
+   >&2 echo "PORT variable must be given when https protocol is used in fqdn"
    exit 1;
   fi
-  echo "" | openssl s_client -connect ${INPUT_DNS}:${INPUT_PORT} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
-  keytool -importcert -alias server-cert -file certfile.txt -trustcacerts -keystore ./cacerts -storetype JKS -storepass changeme
+  echo "" | openssl s_client -connect ${INPUT_HOST}:${INPUT_PORT} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
+  keytool -importcert -noprompt -alias server-cert -file certfile.txt -trustcacerts -keystore ./cacerts -storetype JKS -storepass changeme
   cat ./cacerts
 fi
 

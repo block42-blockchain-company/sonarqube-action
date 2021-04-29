@@ -16,8 +16,15 @@ REPOSITORY_NAME=$(basename "${GITHUB_REPOSITORY}")
 
 echo "input host: ${INPUT_HOST}" 
 if [[ "${INPUT_HOST}" == "https"*  ]]; then
-  echo "download certificate"
-  echo "" | openssl s_client -connect ${INPUT_HOST} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
+  if [[ ! -z ${INPUT_DNS} ]]; then
+   >&2 echo "DNS not given"
+   exit 1;
+  fi
+  if [[ ! -z ${INPUT_PORT} ]]; then
+   >&2 echo "PORT not given"
+   exit 1;
+  fi
+  echo "" | openssl s_client -connect ${INPUT_DNS}:${INPUT_PORT} -showcerts 2>/dev/null | openssl x509 -out certfile.txt
   cat certfile.txt
   keytool -importcert -alias server-cert -file certfile.txt -trustcacerts -keystore ./cacerts -storetype JKS
 fi

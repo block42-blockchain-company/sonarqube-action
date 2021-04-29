@@ -17,7 +17,7 @@ REPOSITORY_NAME=$(basename "${GITHUB_REPOSITORY}")
 echo "input host: ${INPUT_HOST}" 
 if [[ "${INPUT_HOST}" == "https"*  ]]; then
   if [[ ! -z ${INPUT_DNS} ]]; then
-   >&2 echo "DNS not given"
+   >&2 echo "DNS not given ${INPUT_DNS}"
    exit 1;
   fi
   if [[ ! -z ${INPUT_PORT} ]]; then

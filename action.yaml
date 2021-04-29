@@ -8,9 +8,15 @@ runs:
   using: "docker"
   image: "Dockerfile"
 inputs:
-  host:
-    description: "SonarQube server URL"
+  fqdn:
+    description: "SonarQube server URL (e.g. https://sonarqube.example.com:9000)"
     required: true
+  host: 
+    description: "host address (e.g. sonarqube.example.com)"
+    required: false
+  port:
+    description: "port (e.g 9000)"
+    required: false 
   projectKey:
     description: "The project's unique key. Allowed characters are: letters, numbers, -, _, . and :, with at least one non-digit."
     required: false

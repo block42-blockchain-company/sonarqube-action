@@ -48,5 +48,7 @@ else
     -Dsonar.host.url=${INPUT_FQDN} \
     -Dsonar.projectBaseDir=${INPUT_PROJECTBASEDIR} \
     -Dsonar.login=${INPUT_LOGIN} \
-    -Dsonar.password=${SONAR_PASSWORD}
+    -Dsonar.password=${SONAR_PASSWORD} \
+    -Djavax.net.debug=all
+
 fi

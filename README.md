@@ -1,4 +1,4 @@
-# SonarQube GitHub Action
+# SonarQube GitHub Action (SSL support)
 
 Using this GitHub Action, scan your code with SonarQube scanner to detects bugs, vulnerabilities and code smells in more than 20 programming languages!
 

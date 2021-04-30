@@ -26,7 +26,9 @@ jobs:
     - name: SonarQube Scan
       uses: kitabisa/sonarqube-action@v1.1.0
       with:
+        fqdn: ${{ secrets.SONARQUBE_FQDN }}
         host: ${{ secrets.SONARQUBE_HOST }}
+        port: 443
         login: ${{ secrets.SONARQUBE_TOKEN }}
 ```
 
@@ -43,7 +45,9 @@ with:
 
 ## Secrets
 
-- `host` - **_(Required)_** this is the SonarQube server URL.
+- `fqdn` - **_(Required)_** this is the SonarQube server URL.
+- `host` - this is the server IP/hostname without http/https protocol. **_(Required)_** if the `fqdn` start with https
+- `port` - this is the server PORT where sonarqube is listening on. **_(Required)_** if the `fqdn` start with https
 - `login` - **_(Required)_** the login or authentication token of a SonarQube user with Execute Analysis permission on the project. See [how to generate SonarQube token](https://docs.sonarqube.org/latest/user-guide/user-token/).
 - `password` - The password that goes with the `login` username. This should be left blank if an `login` are authentication token.
 

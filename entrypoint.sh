@@ -43,8 +43,8 @@ if [[ ! -f "${GITHUB_WORKSPACE}/sonar-project.properties" ]]; then
     -Dsonar.login=${INPUT_LOGIN} \
     -Dsonar.password=${SONAR_PASSWORD} \
     -Dsonar.sources=. \
-    -Dsonar.sourceEncoding=UTF-8 \
-    -Dsonar.coverage.jacoco.xmlReportPaths=**/jacocoTestReport.xml
+    -Dsonar.sourceEncoding=UTF-8 \ 
+    $(if [[ ${INPUT_CODE_COVERAGE_PATH} ]]; then echo "-Dsonar.coverage.jacoco.xmlReportPaths=**/${INPUT_CODE_COVERAGE_PATH}.xml"; fi)
 else
   sonar-scanner \
     -Dsonar.host.url=${INPUT_FQDN} \
@@ -52,6 +52,6 @@ else
     -Dsonar.login=${INPUT_LOGIN} \
     -Dsonar.password=${SONAR_PASSWORD} \
     -Djavax.net.debug=all \
-    -Dsonar.coverage.jacoco.xmlReportPaths=**/jacocoTestReport.xml
+    $(if [[ ${INPUT_CODE_COVERAGE_PATH} ]]; then echo "-Dsonar.coverage.jacoco.xmlReportPaths=**/${INPUT_CODE_COVERAGE_PATH}.xml"; fi)
 
 fi

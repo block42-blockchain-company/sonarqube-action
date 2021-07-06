@@ -43,15 +43,13 @@ if [[ ! -f "${GITHUB_WORKSPACE}/sonar-project.properties" ]]; then
     -Dsonar.login=${INPUT_LOGIN} \
     -Dsonar.password=${SONAR_PASSWORD} \
     -Dsonar.sources=. \
-    -Dsonar.sourceEncoding=UTF-8 \ 
-    $(if [[ ${INPUT_CODE_COVERAGE_PATH} ]]; then echo "-Dsonar.coverageReportPaths=${INPUT_CODE_COVERAGE_PATH}"; fi)
+    -Dsonar.sourceEncoding=UTF-8 $(if [[ -n ${INPUT_CODE_COVERAGE_PATH} ]]; then echo "-Dsonar.coverageReportPaths=${INPUT_CODE_COVERAGE_PATH}"; fi)
 else
   sonar-scanner \
     -Dsonar.host.url=${INPUT_FQDN} \
     -Dsonar.projectBaseDir=${INPUT_PROJECTBASEDIR} \
     -Dsonar.login=${INPUT_LOGIN} \
     -Dsonar.password=${SONAR_PASSWORD} \
-    -Djavax.net.debug=all \
-    $(if [[ ${INPUT_CODE_COVERAGE_PATH} ]]; then echo "-Dsonar.coverageReportPaths=${INPUT_CODE_COVERAGE_PATH}"; fi)
+    -Djavax.net.debug=all $(if [[ -n ${INPUT_CODE_COVERAGE_PATH} ]]; then echo "-Dsonar.coverageReportPaths=${INPUT_CODE_COVERAGE_PATH}"; fi)
 
 fi

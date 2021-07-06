@@ -40,5 +40,5 @@ inputs:
     description: "Password that goes with the sonar.login username. This should be left blank if an authentication token is being used."
     required: false
   code_coverage_path:
-    description: "Path to coverage report in the Generic Test Data format."
+    description: "Path to jacoco coverage report file."
     required: false 

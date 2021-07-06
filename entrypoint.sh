@@ -43,13 +43,15 @@ if [[ ! -f "${GITHUB_WORKSPACE}/sonar-project.properties" ]]; then
     -Dsonar.login=${INPUT_LOGIN} \
     -Dsonar.password=${SONAR_PASSWORD} \
     -Dsonar.sources=. \
-    -Dsonar.sourceEncoding=UTF-8 
+    -Dsonar.sourceEncoding=UTF-8 \
+    -Dsonar.coverageReportPaths=**/reports/**/*.xml
 else
   sonar-scanner \
     -Dsonar.host.url=${INPUT_FQDN} \
     -Dsonar.projectBaseDir=${INPUT_PROJECTBASEDIR} \
     -Dsonar.login=${INPUT_LOGIN} \
     -Dsonar.password=${SONAR_PASSWORD} \
-    -Djavax.net.debug=all
+    -Djavax.net.debug=all \
+    -Dsonar.coverageReportPaths=**/reports/**/*.xml
 
 fi
